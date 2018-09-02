@@ -1,0 +1,21 @@
+.items {
+  overflow: hidden;
+  width: 90%;
+  margin: 0 auto;
+  li {
+    border: 1PX solid  #ccc;
+    float: left;
+    width: 24%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &.checked {
+      color: $check-in-color;
+    }
+    &.notChecked {
+      background: #e32323;
+      color: #fff;
+    }
+  }
+}

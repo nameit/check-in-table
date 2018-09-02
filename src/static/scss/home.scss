@@ -1,0 +1,58 @@
+.date-label {
+  background: $check-in-color;
+  border-radius: 7px;
+  height: 34px;
+  line-height: 34px;
+  margin: 17px auto;
+  width: 50%;
+  text-align: center;
+  color: #fff;
+}
+
+.check-in-wrap {
+  border-left: 1PX solid $bd-color;
+  border-top: 1PX solid $bd-color;
+  margin: 0 30px 30px;
+  .check-in-head,.check-in-body-row {
+    display: flex;
+  }
+  .check-in-body-row:nth-child(2n) {
+    background: #f9f9f9;
+  }
+  .check-in-head {
+    background: $bg-color;
+    color: $theme-color;
+  }
+  .head-item,.body-item {
+    border-right: 1PX solid $bd-color;
+    border-bottom: 1PX solid $bd-color;
+    padding: 10px 4px;
+  }
+  .target-name,.target-name-title {
+    width: 70%;
+  }
+  .check-in-title,.check-in {
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .check-in.checked:after {
+    content: '✔';
+    position: absolute;
+    display: block;
+    color: $check-in-color;
+  }
+}
+
+.submit {
+  margin: 30px auto;
+  background: $theme-color;
+  line-height: 44px;
+  height: 44px;
+  text-align: center;
+  color: #fff;
+  width: 70%;
+  border-radius: 20px;
+}
+
