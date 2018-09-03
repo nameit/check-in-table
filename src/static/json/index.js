@@ -1,5 +1,5 @@
 const Checkin = {
-  targets: [{
+  dad: [{
     cn: '早睡',
     en: 'earlySleep'
   }, {
@@ -8,6 +8,16 @@ const Checkin = {
   }, {
     cn: '刷题',
     en: 'study'
+  }, {
+    cn: '运动',
+    en: 'sport'
+  }],
+  son: [{
+    cn: '早睡',
+    en: 'earlySleep'
+  }, {
+    cn: '阅读',
+    en: 'read'
   }, {
     cn: '运动',
     en: 'sport'

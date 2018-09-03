@@ -4,7 +4,7 @@ import ReactDom from 'react-dom';
 class Bottom extends React.Component {
   history() {
     console.log('in');
-    this.props.history.push('/history');
+    this.props.history.push(`/history?user=${this.props.user}`);
   }
 
   render() {

@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
+import qs from 'qs';
 
 import Datelabel from '../components/date-label';
 import Header from '../components/header';
@@ -16,22 +17,26 @@ class History extends React.Component {
   }
 
   componentDidMount() {
+    // 从首页传过来的用户
+    const user = qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).user;
     // 开启数据库
-    const request = indexedDB.open('yk',1);
+    const request = indexedDB.open(user, 1);
 
+    const that = this;
+
+    const Goals = Data[user];
     request.onerror = function (event) {
       console.log("打开数据库失败:"+event.target.message);
     }
 
-    const that = this;
 
     request.onsuccess = function (event) {
       // 获取英文集合
       const ens = [];
-      Data.targets.map(i =>
+      Goals.map(i =>
         ens.push(i.en)
       )
-      console.log("打开数据库成功!");
+      console.log(`打开${user}数据库成功!`);
       db = event.target.result;
       const objectStore = db.transaction('checkin', 'readonly').objectStore('checkin');
       objectStore.openCursor().onsuccess = function(event) {
@@ -45,7 +50,7 @@ class History extends React.Component {
                   // 对象转化为数组后过滤掉时间字段再遍历其他项目
                   Object.entries(cursor.value).filter(i => i[0].indexOf('date') < 0).map((item, index) => {
                     // 英文占据集合中第几个返回对应的中文
-                    const cn = Data.targets[ens.indexOf(item[0])]['cn'];
+                    const cn = Goals[ens.indexOf(item[0])]['cn'];
                     return <li key={index} className={item[1] ? 'checked' : 'notChecked'}>{cn}</li>;
                   })
                 }

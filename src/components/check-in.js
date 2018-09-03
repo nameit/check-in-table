@@ -8,8 +8,9 @@ class Checkin extends React.Component {
     e.target.className = e.target.className.indexOf('checked') >= 0 ?
       'body-item check-in' : 'body-item check-in checked';
   }
+
   render() {
-    const arr = Data.targets;
+    const arr = Data[this.props.user]
     const target = arr.map((item, index) =>
             <div className='check-in-body-row' key={ index }>
               <div className='body-item target-name'>{ item.cn }</div>

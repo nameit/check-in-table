@@ -26,6 +26,19 @@ header {
   .center {
     display: inline-block;
   }
+  .right {
+    position: absolute;
+    right: 10px;
+    font-size: 14px;
+  }
+  .userList {
+    position: absolute;
+    width: 50px;
+    right: 0;
+    font-size: 14px;
+    background: $theme-color;
+    border-radius: 0 0 4px 4px;
+  }
 }
 .bottom {
   position: absolute;
