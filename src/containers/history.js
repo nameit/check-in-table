@@ -43,7 +43,7 @@ class History extends React.Component {
         var cursor = event.target.result;
         // 有数据就遍历所有记录
         if (cursor) {
-          ul = <div key={cursor.key}>
+          ul.push(<div key={cursor.key}>
               <Datelabel date={cursor.value.date} />
               <ul className='items'>
                 {
@@ -55,7 +55,7 @@ class History extends React.Component {
                   })
                 }
               </ul>
-            </div>;
+            </div>);
           cursor.continue();
         }
         else {
