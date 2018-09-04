@@ -107,7 +107,7 @@ class Index extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div id='home'>
         <Header title='签到表' user={this.state.user} changeUser={this.changeUser.bind(this)} />
         <Datelabel date={this.state.today} />
         <Checkin user={this.state.user} />

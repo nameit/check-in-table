@@ -3,6 +3,16 @@ ul {
   list-style: none;
 }
 
+html,body {
+  width: 100%;
+  height: 100%;
+}
+
+#root {
+  position: relative;
+  height: 100%;
+}
+
 header {
   background: $theme-color;
   text-align: center;
@@ -50,4 +60,18 @@ header {
   background: $theme-color;
   text-align: center;
   color: #fff;
+}
+
+.user-panel {
+  position: absolute;
+  background: lightblue;
+  overflow: hidden;
+  top: 44px;
+  right: -50%;
+  width: 50%;
+  height: 200px;
+  transition: all 0.2s;
+  &.show {
+    right: 0;
+  }
 }

@@ -8,7 +8,7 @@ class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userListShow: false
+      userPanelShow: false
     };
     this.changeUser = this.changeUser.bind(this);
   }
@@ -21,7 +21,13 @@ class Header extends React.Component {
     if (this.props.handleRight) {
       this.props.handleRight();
     } else {
-      this.state.userListShow ? this.setState({userListShow: false}) : this.setState({userListShow: true});
+      if (this.state.userPanelShow) {
+        this.setState({userPanelShow: false});
+        document.getElementById('home').removeAttribute('class');
+      } else {
+        document.getElementById('home').className = 'hide';
+        this.setState({userPanelShow: true});
+      }
     }
   }
 
@@ -63,6 +69,7 @@ class Header extends React.Component {
     const userList = this.state.userListShow ? <ul className='userList'>
         {li}
       </ul> : '';
+    const userPanel = this.state.userPanelShow ? <div className='user-panel show'></div> : <div className='user-panel'></div>;
     return (
       <header className='header'>
         <span className={this.props.needBack ? 'back' : ''} onClick={this.handleBack.bind(this)} />
