@@ -6,8 +6,6 @@ import Datelabel from '../components/date-label';
 import Header from '../components/header';
 import Data from '../static/json/index';
 
-let db, cns = [];
-let ul = [];
 class History extends React.Component {
   constructor(props) {
     super(props);
@@ -17,6 +15,8 @@ class History extends React.Component {
   }
 
   componentDidMount() {
+    let db, cns = [];
+    let ul = [];
     // 从首页传过来的用户
     const user = qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).user;
     // 开启数据库
