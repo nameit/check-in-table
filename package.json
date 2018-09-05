@@ -14,8 +14,11 @@
   "devDependencies": {
     "@babel/core": "^7.0.0-rc.2",
     "@babel/plugin-proposal-class-properties": "^7.0.0-rc.2",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
     "@babel/preset-react": "^7.0.0-rc.2",
+    "antd-mobile": "^2.2.3",
     "babel-loader": "^8.0.0-beta.6",
+    "babel-plugin-import": "^1.8.0",
     "clean-webpack-plugin": "^0.1.19",
     "file-loader": "^2.0.0",
     "html-webpack-plugin": "^3.2.0",

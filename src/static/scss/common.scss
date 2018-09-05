@@ -64,14 +64,14 @@ header {
 
 .user-panel {
   position: absolute;
-  background: lightblue;
+  background: $theme-color;
   overflow: hidden;
-  top: 44px;
-  right: -50%;
-  width: 50%;
-  height: 200px;
-  transition: all 0.2s;
-  &.show {
-    right: 0;
+  top: 0px;
+  right: -150px;
+  width: 150px;
+  height: 100%;
+  box-shadow: inset 5px 0 10px rgba(0,0,0,0.5);
+  .am-list-item .am-list-line .am-list-extra {
+    flex-basis: 100%;
   }
 }

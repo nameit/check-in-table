@@ -2,6 +2,11 @@ const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const svgDirs = [
+  require.resolve('antd-mobile').replace(/warn\.js$/, ''),  // 1. 属于 antd-mobile 内置 svg 文件
+  path.resolve(__dirname, 'src/svgs'),  // 2. 自己私人的 svg 存放目录
+]
+
 module.exports = {
   entry: {
     app: './src/app.js'
@@ -22,7 +27,7 @@ module.exports = {
         loader: 'babel-loader',
         options: {
           presets: ['@babel/preset-react'],
-          plugins: ['@babel/plugin-proposal-class-properties']
+          plugins: [['import', { libraryName: 'antd-mobile', style: 'css' }], '@babel/plugin-syntax-dynamic-import', '@babel/plugin-proposal-class-properties']
         }
       }, {
         test: /\.(jpg|png|gif)$/,
@@ -48,6 +53,12 @@ module.exports = {
         }, {
           loader: 'sass-loader'
         }]
+      }, {
+        test: /\.(svg)$/i,
+        loader: 'svg-sprite-loader',
+        options: {
+          include: svgDirs,  // 把 svgDirs 路径下的所有 svg 文件交给 svg-sprite-loader 插件处理
+        }
       }
     ]
   },

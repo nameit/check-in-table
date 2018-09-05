@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
+import {List, DatePicker} from 'antd-mobile';
 import Users from '../static/json/users';
 
 let db, objectStore;
@@ -69,7 +70,20 @@ class Header extends React.Component {
     const userList = this.state.userListShow ? <ul className='userList'>
         {li}
       </ul> : '';
-    const userPanel = this.state.userPanelShow ? <div className='user-panel show'></div> : <div className='user-panel'></div>;
+    const userPanel = <div className='user-panel'>
+      <div className='avatar'></div>
+      <List className="date-picker-list" style={{ backgroundColor: 'white' }}>
+        <DatePicker
+          mode="date"
+          title="Select Date"
+          extra="开始日期"
+          value={this.state.date}
+          onChange={date => this.setState({ date })}
+        >
+          <List.Item arrow="horizontal"></List.Item>
+        </DatePicker>
+      </List>
+    </div>;
     return (
       <header className='header'>
         <span className={this.props.needBack ? 'back' : ''} onClick={this.handleBack.bind(this)} />
@@ -78,6 +92,7 @@ class Header extends React.Component {
           {this.props.user}
         </span>
         {userList}
+        {userPanel}
       </header>
     )
   }
