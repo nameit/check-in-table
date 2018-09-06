@@ -10,13 +10,15 @@
 
 .date-label {
   background: $check-in-color;
-  border-radius: 7px;
   height: 34px;
   line-height: 34px;
   margin: 17px auto;
   width: 50%;
   text-align: center;
   color: #fff;
+  background: radial-gradient(circle at top left, transparent 5px, $check-in-color 0) top left, radial-gradient(circle at top right, transparent 5px, $check-in-color 0) top right, radial-gradient(circle at bottom right, transparent 5px, $check-in-color 0) bottom right, radial-gradient(circle at bottom left, transparent 5px, $check-in-color 0) bottom left;
+  background-size: 50% 50%;
+  background-repeat: no-repeat;
 }
 
 .check-in-wrap {
@@ -59,6 +61,7 @@
   margin: 30px auto;
   background: $theme-color;
   line-height: 44px;
+  font-size: 15px;
   height: 44px;
   text-align: center;
   color: #fff;
