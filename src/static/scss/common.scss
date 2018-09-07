@@ -76,13 +76,14 @@ header {
   .avatar {
     width: 100px;
     height: 100px;
-    margin: 30px auto;
+    margin: 26px auto;
     background: lightblue;
     border-radius: 100%;
   }
   .am-list-item {
     box-shadow: $box-shadow;
     margin-bottom: 30px;
+    min-height: 34px;
     .am-list-line .am-list-extra {
       flex-basis: 100%;
       font-size: 15px;

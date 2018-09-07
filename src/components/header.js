@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { List, DatePicker, Popover } from 'antd-mobile';
+import { List, DatePicker, Popover, Modal } from 'antd-mobile';
 import Users from '../static/json/users';
 
 const Item = Popover.Item;
@@ -79,6 +79,25 @@ class Header extends React.Component {
     }
   }
 
+  deleteDatabase() {
+    Modal.alert('','确定要删除数据库', [{
+      text: '取消',
+      onPress: () => {}
+    }, {
+      text: '确定',
+      onPress: () => {
+        const request = indexedDB.open(this.props.user, 1);
+        request.onsuccess = function(event) {
+          console.log("版本变化！");
+          const db = event.target.result;
+          
+          const objectStore = db.transaction('checkin', 'readwrite').objectStore('checkin');
+          objectStore.clear();
+        }
+      }
+    }])
+  }
+
   render() {
     const li = Users.filter(i => i !== this.props.user).map((item, index) =>
           <li key={index} onClick={() => this.changeUser(item)}>{item}</li>);
@@ -129,7 +148,7 @@ class Header extends React.Component {
       >
         <div className='change-user'>切换用户</div>
       </Popover>
-      <div className='delete-database'>删除数据</div>
+      <div className='delete-database' onClick={this.deleteDatabase.bind(this)} >删除数据</div>
     </div>;
     return (
       <header className='header'>
