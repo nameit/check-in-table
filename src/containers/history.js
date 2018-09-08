@@ -69,11 +69,11 @@ class History extends React.Component {
           cursor.continue();
         }
         else {
-          ul.push(<div key={1} className='nodata'>暂无数据</div>);
+          // ul.push(<div key={1} className='nodata'>暂无数据</div>);
+          that.setState({
+            ul
+          });
         }
-        that.setState({
-          ul
-        });
       };
     }
   }

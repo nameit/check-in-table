@@ -8,12 +8,13 @@ import Bottom from '../components/bottom';
 import Datelabel from '../components/date-label';
 import Checkin from '../components/check-in';
 import Data from '../static/json/index';
+import Utils from '../utils';
 
 class Index extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: 'dad'
+      user: Utils.getStorage('currentUser') || 'dad'
     };
   }
 
