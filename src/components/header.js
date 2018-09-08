@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import { List, DatePicker, Popover, Modal } from 'antd-mobile';
+
 import Users from '../static/json/users';
+import Utils from '../utils';
 
 const Item = Popover.Item;
 
@@ -34,11 +36,15 @@ class Header extends React.Component {
     }
   }
 
+  // 点击
   onSelect(opt) {
     // console.log(opt.props.value);
     this.setState({
       visible: false,
       selected: opt.props.value,
+    }, () => {
+      this.props.changeUser(this.state.selected);
+      Utils.setStorage('currentUser', this.state.selected);
     });
   };
   handleVisibleChange(visible) {
@@ -99,8 +105,10 @@ class Header extends React.Component {
   }
 
   render() {
+    // const li = Users.filter(i => i !== this.props.user).map((item, index) =>
+          // <li key={index} onClick={() => this.changeUser(item)}>{item}</li>);
     const li = Users.filter(i => i !== this.props.user).map((item, index) =>
-          <li key={index} onClick={() => this.changeUser(item)}>{item}</li>);
+          <Item key={index} value={item}>{item}</Item>);
     const userList = this.state.userListShow ? <ul className='userList'>
         {li}
       </ul> : '';
@@ -132,16 +140,18 @@ class Header extends React.Component {
         overlayClassName="fortest"
         overlayStyle={{ color: 'currentColor' }}
         visible={this.state.visible}
-        overlay={[
-          (<Item key="4" value="scan" data-seed="logId">Scan</Item>),
-          (<Item key="5" value="special" style={{ whiteSpace: 'nowrap' }}>My Qrcode</Item>),
-          (<Item key="6" value="button ct" >
-            <span style={{ marginRight: 5 }}>Help</span>
-          </Item>),
-        ]}
+        // overlay={[
+        //   (<Item key="4" value="scan" data-seed="logId">Scan</Item>),
+        //   (<Item key="5" value="special" style={{ whiteSpace: 'nowrap' }}>My Qrcode</Item>),
+        //   (<Item key="6" value="button ct" >
+        //     <span style={{ marginRight: 5 }}>Help</span>
+        //   </Item>),
+        // ]}
+        overlay={[li]}
+        placement='bottom'
         align={{
           overflow: { adjustY: 0, adjustX: 10 },
-          offset: [-10, 0],
+          offset: [0, 0],
         }}
         onVisibleChange={this.handleVisibleChange.bind(this)}
         onSelect={this.onSelect.bind(this)}
@@ -155,7 +165,7 @@ class Header extends React.Component {
         <span className={this.props.needBack ? 'back' : ''} onClick={this.handleBack.bind(this)} />
         <span className='center'>{this.props.title}</span>
         <span className='right' onClick={this.handleRight.bind(this)}>
-          {this.props.user}
+          {this.state.selected || this.props.user}
         </span>
         {userList}
         {userPanel}
