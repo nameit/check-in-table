@@ -15,10 +15,19 @@ class History extends React.Component {
   }
 
   componentDidMount() {
-    let db, cns = [];
+    let db, cns = [], bound;
     let ul = [];
     // 从首页传过来的用户
     const user = qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).user;
+    // 从首页传过来的时间
+    const startDate = qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).sd;
+    const endDate = qs.parse(this.props.location.search, { ignoreQueryPrefix: true }).ed;
+    if (startDate && endDate) {
+      bound = IDBKeyRange.bound(startDate, endDate, false, false);
+    } else {
+      bound = '';
+    }
+
     // 开启数据库
     const request = indexedDB.open(user, 1);
 
@@ -39,7 +48,8 @@ class History extends React.Component {
       console.log(`打开${user}数据库成功!`);
       db = event.target.result;
       const objectStore = db.transaction('checkin', 'readonly').objectStore('checkin');
-      objectStore.openCursor().onsuccess = function(event) {
+      const cursors = bound ? objectStore.openCursor(bound) : objectStore.openCursor();
+      cursors.onsuccess = function(event) {
         var cursor = event.target.result;
         // 有数据就遍历所有记录
         if (cursor) {

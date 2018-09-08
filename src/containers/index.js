@@ -19,12 +19,12 @@ class Index extends React.Component {
 
   componentDidMount() {
     const today = new Date();
-    const time = today.setTime(today.getTime() - 24*60*60*1000);
+    today.setTime(today.getTime() - 24*60*60*1000);
     const day = today.getDate();
     const month = today.getMonth() + 1;
     const year = today.getFullYear();
     this.setState({
-      today: `${year}年${month}月${day}日`
+      yesterday: `${year}年${month}月${day}日`
     });
 
     // 开启数据库
@@ -91,7 +91,7 @@ class Index extends React.Component {
       );
 
       // 增加时间字段
-      detail.date = that.state.today
+      detail.date = that.state.yesterday
 
       // 往数据库里增加数据
       const req = objectStore.put(detail);
@@ -108,8 +108,8 @@ class Index extends React.Component {
   render() {
     return (
       <div id='home'>
-        <Header title='签到表' user={this.state.user} changeUser={this.changeUser.bind(this)} />
-        <Datelabel date={this.state.today} />
+        <Header title='签到表' {...this.props} user={this.state.user} changeUser={this.changeUser.bind(this)} />
+        <Datelabel date={this.state.yesterday} />
         <Checkin user={this.state.user} />
         <div className='submit' onClick={() => { this.submit() }}>提交</div>
         <Bottom {...this.props} user={this.state.user} />

@@ -1,7 +1,11 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import { List, DatePicker, Popover, Modal } from 'antd-mobile';
+
+import Datelabel from '../components/date-label';
 import Users from '../static/json/users';
+import Utils from '../Utils';
+import Data from '../static/json/index';
 
 const Item = Popover.Item;
 
@@ -47,16 +51,35 @@ class Header extends React.Component {
     });
   };
 
+  search() {
+    const that = this;
+    const startDate = Utils.formDate(this.state.startDate);
+    const endDate = Utils.formDate(this.state.endDate);
+    let ul = [];
+    const Goals = Data[this.props.user];
+    const ens = [];
+    Goals.map(i =>
+      ens.push(i.en)
+    )
+    // 开启数据库
+    const request = indexedDB.open(this.props.user, 1);
+    request.onsuccess = (event) => {
+      const db = event.target.result;
+      const objectStore = db.transaction('checkin', 'readwrite').objectStore('checkin');
+      that.props.history.push(`/history?user=${this.props.user}&sd=${startDate}&ed=${endDate}`);
+    }
+  }
+
   changeUser(user) {
     const that = this;
     // 开启数据库
     const request = indexedDB.open(user, 1);
     
-    request.onerror = function (event) {
+    request.onerror = (event) => {
       console.log("打开数据库失败:"+event.target.message);
     }
 
-    request.onsuccess = function (event) {
+    request.onsuccess = (event) => {
       console.log(`打开${user}数据库成功!`);
       const db = event.target.result;
       const objectStore = db.transaction("checkin", "readwrite").objectStore("checkin");
@@ -79,7 +102,7 @@ class Header extends React.Component {
     }
   }
 
-  deleteDatabase() {
+  clearDatabase() {
     Modal.alert('','确定要删除数据库', [{
       text: '取消',
       onPress: () => {}
@@ -126,7 +149,7 @@ class Header extends React.Component {
           <List.Item arrow="horizontal"></List.Item>
         </DatePicker>
       </List>
-      <div className='search'>搜索</div>
+      <div className='search' onClick={this.search.bind(this)}>搜索</div>
       <div className='divider'></div>
       <Popover mask
         overlayClassName="fortest"
@@ -148,7 +171,7 @@ class Header extends React.Component {
       >
         <div className='change-user'>切换用户</div>
       </Popover>
-      <div className='delete-database' onClick={this.deleteDatabase.bind(this)} >删除数据</div>
+      <div className='delete-database' onClick={this.clearDatabase.bind(this)} >删除数据</div>
     </div>;
     return (
       <header className='header'>
