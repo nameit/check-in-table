@@ -21,6 +21,7 @@ class Header extends React.Component {
     this.preImg = this.preImg.bind(this);
     this.Id = this.Id.bind(this);
     this.getFileUrl = this.getFileUrl.bind(this);
+    this.encn = this.encn.bind(this);
   }
   
   handleBack() {
@@ -42,14 +43,7 @@ class Header extends React.Component {
     }
   }
 
-  // 改变头像
-  changeAvatar(files, type, index) {
-    this.setState({
-      files,
-    });
-  }
-
-  // 点击其他用户
+  // 切换用户
   onSelect(opt) {
     // console.log(opt.props.value);
     this.setState({
@@ -94,6 +88,7 @@ class Header extends React.Component {
     return document.getElementById(id).click();
   }
 
+  // 改变头像
   changeToop(){
     var file = this.Id("file");
     if(file.value==''){
@@ -121,42 +116,10 @@ class Header extends React.Component {
 
   //读取图片后预览
   preImg(fileId,imgId) {
-    var imgPre =this.Id(imgId);
+    var imgPre = this.Id(imgId);
     imgPre.src = this.getFileUrl(fileId);
   }
 
-  // 切换用户
-  /* changeUser(user) {
-    const that = this;
-    // 开启数据库
-    const request = indexedDB.open(user, 1);
-    
-    request.onerror = (event) => {
-      console.log("打开数据库失败:"+event.target.message);
-    }
-
-    request.onsuccess = (event) => {
-      console.log(`打开${user}数据库成功!`);
-      const db = event.target.result;
-      const objectStore = db.transaction("checkin", "readwrite").objectStore("checkin");
-      that.props.changeUser(user);
-      that.setState({
-        userListShow: false
-      });
-    } 
-
-    request.onupgradeneeded = function(event) {
-      console.log("版本变化！");
-      const db = event.target.result;
-      if (!db.objectStoreNames.contains('checkin')) {
-        const objectStore = db.createObjectStore("checkin", {
-          keyPath: "date"
-          // autoIncrement: true
-        });
-        objectStore.createIndex('date', 'date', {unique: false});
-      }
-    }
-  } */
 
   // 清空数据
   clearDatabase() {
@@ -178,11 +141,17 @@ class Header extends React.Component {
     }])
   }
 
+  encn(user) {
+    return Users[Users.reduce(function(prev, curr) {return [...prev, ...curr.en];}, []).indexOf(user)]['cn'];
+  }
+
   render() {
+    const enuser = this.state.selected || this.props.user;
+    const cnuser = this.encn(enuser);
     // const li = Users.filter(i => i !== this.props.user).map((item, index) =>
           // <li key={index} onClick={() => this.changeUser(item)}>{item}</li>);
-    const li = Users.filter(i => i !== this.props.user).map((item, index) =>
-          <Item key={index} value={item}>{item}</Item>);
+    const li = Users.reduce(function(prev, curr) {return [...prev, ...curr.en];}, []).filter(i => i !== this.props.user).map((item, index) =>
+          <Item key={index} value={item}>{this.encn(item)}</Item>);
     const userList = this.state.userListShow ? <ul className='userList'>
         {li}
       </ul> : '';
@@ -215,13 +184,6 @@ class Header extends React.Component {
         overlayClassName="fortest"
         overlayStyle={{ color: 'currentColor' }}
         visible={this.state.visible}
-        // overlay={[
-        //   (<Item key="4" value="scan" data-seed="logId">Scan</Item>),
-        //   (<Item key="5" value="special" style={{ whiteSpace: 'nowrap' }}>My Qrcode</Item>),
-        //   (<Item key="6" value="button ct" >
-        //     <span style={{ marginRight: 5 }}>Help</span>
-        //   </Item>),
-        // ]}
         overlay={[li]}
         placement='bottom'
         align={{
@@ -240,7 +202,7 @@ class Header extends React.Component {
         <span className={this.props.needBack ? 'back' : ''} onClick={this.handleBack.bind(this)} />
         <span className='center'>{this.props.title}</span>
         <span className='right' onClick={this.handleRight.bind(this)}>
-          {this.state.selected || this.props.user}
+          {cnuser}
         </span>
         {userList}
         {userPanel}

@@ -57,7 +57,7 @@ class History extends React.Component {
               <Datelabel date={cursor.value.date} />
               <ul className='items'>
                 {
-                  // 对象转化为数组后过滤掉时间字段再遍历其他项目
+                  // 对象转换为数组后过滤掉时间字段再遍历其他项目
                   Object.entries(cursor.value).filter(i => i[0].indexOf('date') < 0).map((item, index) => {
                     // 英文占据集合中第几个返回对应的中文
                     const cn = Goals[ens.indexOf(item[0])]['cn'];

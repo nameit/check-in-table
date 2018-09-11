@@ -14,7 +14,7 @@ class Index extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: Utils.getStorage('currentUser') || 'dad'
+      user: Utils.getStorage('currentUser') || '爸爸'
     };
   }
 
