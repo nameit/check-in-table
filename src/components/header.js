@@ -17,13 +17,17 @@ class Header extends React.Component {
       visible: false,
       selected: '',
     };
-    this.changeUser = this.changeUser.bind(this);
+    // this.changeUser = this.changeUser.bind(this);
+    this.preImg = this.preImg.bind(this);
+    this.Id = this.Id.bind(this);
+    this.getFileUrl = this.getFileUrl.bind(this);
   }
   
   handleBack() {
     this.props.handleBack ? this.props.handleBack() : this.props.history.goBack();
   }
 
+  // 点击名字
   handleRight() {
     if (this.props.handleRight) {
       this.props.handleRight();
@@ -38,7 +42,14 @@ class Header extends React.Component {
     }
   }
 
-  // 点击
+  // 改变头像
+  changeAvatar(files, type, index) {
+    this.setState({
+      files,
+    });
+  }
+
+  // 点击其他用户
   onSelect(opt) {
     // console.log(opt.props.value);
     this.setState({
@@ -55,6 +66,7 @@ class Header extends React.Component {
     });
   };
 
+  // 点击搜索
   search() {
     const that = this;
     const startDate = Utils.formDate(this.state.startDate);
@@ -74,7 +86,47 @@ class Header extends React.Component {
     }
   }
 
-  changeUser(user) {
+  Id(id) {
+    return document.getElementById(id);
+  }
+
+  IdClick(id) {
+    return document.getElementById(id).click();
+  }
+
+  changeToop(){
+    var file = this.Id("file");
+    if(file.value==''){
+      //设置默认图片
+    this.Id("avatar").src = 'http://sandbox.runjs.cn/uploads/rs/72/huvtowwn/zanwu.png';
+    } else {
+      this.preImg("file", "avatar");
+    }
+  }
+
+  //获取input[file]图片的url Important
+  getFileUrl(fileId) {
+    var url;
+    var file = this.Id(fileId);
+    var agent = navigator.userAgent;
+    console.log(agent)
+    if (agent.indexOf("MSIE")>=1) {
+    url = file.value;
+    } else {
+      url = window.URL.createObjectURL(file.files.item(0));
+    }
+    Utils.setStorage('avatarUrl', url);
+    return url;
+  }
+
+  //读取图片后预览
+  preImg(fileId,imgId) {
+    var imgPre =this.Id(imgId);
+    imgPre.src = this.getFileUrl(fileId);
+  }
+
+  // 切换用户
+  /* changeUser(user) {
     const that = this;
     // 开启数据库
     const request = indexedDB.open(user, 1);
@@ -104,8 +156,9 @@ class Header extends React.Component {
         objectStore.createIndex('date', 'date', {unique: false});
       }
     }
-  }
+  } */
 
+  // 清空数据
   clearDatabase() {
     Modal.alert('','确定要删除数据库', [{
       text: '取消',
@@ -134,7 +187,8 @@ class Header extends React.Component {
         {li}
       </ul> : '';
     const userPanel = <div className='user-panel'>
-      <div className='avatar'></div>
+      <img id='avatar' onClick={this.IdClick.bind(this, 'file')} src='http://sandbox.runjs.cn/uploads/rs/72/huvtowwn/zanwu.png' />
+      <input type="file" name="file" accept="image/png,image/jpg,image/jpeg" id="file" onChange={this.changeToop.bind(this)} />
       <List className="date-picker-list" style={{ backgroundColor: 'white' }}>
         <DatePicker
           mode="date"
