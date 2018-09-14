@@ -18,9 +18,6 @@ class Header extends React.Component {
       selected: '',
     };
     // this.changeUser = this.changeUser.bind(this);
-    this.preImg = this.preImg.bind(this);
-    this.Id = this.Id.bind(this);
-    this.getFileUrl = this.getFileUrl.bind(this);
     this.encn = this.encn.bind(this);
   }
   
@@ -80,46 +77,6 @@ class Header extends React.Component {
     }
   }
 
-  Id(id) {
-    return document.getElementById(id);
-  }
-
-  IdClick(id) {
-    return document.getElementById(id).click();
-  }
-
-  // 改变头像
-  changeToop(){
-    var file = this.Id("file");
-    if(file.value==''){
-      //设置默认图片
-    this.Id("avatar").src = 'http://sandbox.runjs.cn/uploads/rs/72/huvtowwn/zanwu.png';
-    } else {
-      this.preImg("file", "avatar");
-    }
-  }
-
-  //获取input[file]图片的url Important
-  getFileUrl(fileId) {
-    var url;
-    var file = this.Id(fileId);
-    var agent = navigator.userAgent;
-    console.log(agent)
-    if (agent.indexOf("MSIE")>=1) {
-    url = file.value;
-    } else {
-      url = window.URL.createObjectURL(file.files.item(0));
-    }
-    Utils.setStorage('avatarUrl', url);
-    return url;
-  }
-
-  //读取图片后预览
-  preImg(fileId,imgId) {
-    var imgPre = this.Id(imgId);
-    imgPre.src = this.getFileUrl(fileId);
-  }
-
 
   // 清空数据
   clearDatabase() {
@@ -156,8 +113,8 @@ class Header extends React.Component {
         {li}
       </ul> : '';
     const userPanel = <div className='user-panel'>
-      <img id='avatar' onClick={this.IdClick.bind(this, 'file')} src='http://sandbox.runjs.cn/uploads/rs/72/huvtowwn/zanwu.png' />
-      <input type="file" name="file" accept="image/png,image/jpg,image/jpeg" id="file" onChange={this.changeToop.bind(this)} />
+      <img id='avatar' onClick={() => Utils.IdClick('file')} src='http://sandbox.runjs.cn/uploads/rs/72/huvtowwn/zanwu.png' />
+      <input type="file" name="file" accept="image/png,image/jpg,image/jpeg" id="file" onChange={() => Utils.changeAvatar('file', 'avatar')} />
       <List className="date-picker-list" style={{ backgroundColor: 'white' }}>
         <DatePicker
           mode="date"
