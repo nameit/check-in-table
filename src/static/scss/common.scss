@@ -1,4 +1,8 @@
-* {margin: 0;padding: 0}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 ul {
   list-style: none;
 }
@@ -89,17 +93,7 @@ header {
   width: 150px;
   height: 100%;
   box-shadow: $box-shadow;
-  #avatar {
-    width: 100px;
-    height: 100px;
-    margin: 26px auto;
-    background: lightblue;
-    border-radius: 100%;
-    display: block;
-  }
-  #file {
-    display: none;
-  }
+  
   .am-list-item {
     box-shadow: $box-shadow;
     margin-bottom: 30px;

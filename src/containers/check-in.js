@@ -6,7 +6,7 @@ import '../static/scss/index.scss';
 import Header from '../components/header';
 import Bottom from '../components/bottom';
 import Datelabel from '../components/date-label';
-import Checkin from '../components/check-in';
+import CheckinTable from '../components/check-in-table';
 import Data from '../static/json/index';
 import Utils from '../utils';
 
@@ -111,7 +111,7 @@ class Index extends React.Component {
       <div id='home'>
         <Header title='签到表' {...this.props} user={this.state.user} changeUser={this.changeUser.bind(this)} />
         <Datelabel date={this.state.yesterday} />
-        <Checkin user={this.state.user} />
+        <CheckinTable user={this.state.user} />
         <div className='submit' onClick={() => { this.submit() }}>提交</div>
         <Bottom {...this.props} user={this.state.user} />
       </div>

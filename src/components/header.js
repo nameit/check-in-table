@@ -113,8 +113,7 @@ class Header extends React.Component {
         {li}
       </ul> : '';
     const userPanel = <div className='user-panel'>
-      <img id='avatar' onClick={() => Utils.IdClick('file')} src='http://sandbox.runjs.cn/uploads/rs/72/huvtowwn/zanwu.png' />
-      <input type="file" name="file" accept="image/png,image/jpg,image/jpeg" id="file" onChange={() => Utils.changeAvatar('file', 'avatar')} />
+      {/*<img src=> */}
       <List className="date-picker-list" style={{ backgroundColor: 'white' }}>
         <DatePicker
           mode="date"

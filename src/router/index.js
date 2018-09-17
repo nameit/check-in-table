@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import '../static/scss/index.scss';
 
-import Index from '../containers/index';
+import AddUser from '../containers/add-user';
+import CheckIn from '../containers/check-in';
 import History from '../containers/history';
 
 class RouterMap extends Component {
@@ -15,8 +16,9 @@ class RouterMap extends Component {
     return (
       <Router>
         <Switch>
-          <Route path="/" exact component={ Index } />
+          <Route path="/" exact component={ AddUser } />
           <Route path="/history" component={ History } />
+          <Route path="/check-in" component={ CheckIn } />
         </Switch>
       </Router>
     );
