@@ -1,22 +1,25 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-// import { InputItem } from 'antd-mobile';
-import { createForm } from 'rc-form';
 
 import Utils from '../utils';
+import CheckInItem from '../components/check-in-item';
 
-let ul = [],li;
-
-class AddCheckInTableWrap extends React.Component {
+class AddCheckInTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      plusHidden: true,
-      no: 1,
-      plus: true
+      plus: true,
+      ul: [{
+        no: 1,
+        cnValue: '早睡',
+        enValue: 'sa'
+      }]
     }
-    this.checkValue = this.checkValue.bind(this);
+    // this.checkCnValue = this.checkCnValue.bind(this);
+    // this.checkEnValue = this.checkEnValue.bind(this);
     this.addNewItem = this.addNewItem.bind(this);
+    this.changeList = this.changeList.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
   }
 
   componentDidMount() {
@@ -50,88 +53,57 @@ class AddCheckInTableWrap extends React.Component {
     // this.setState({});
   }
 
-  checkValue(e) {
-    e.target.className = e.target.value ? 'no-border' : ''
-    this.cnref.value && this.enref.value ? this.setState({plusHidden: false}) : this.setState({plusHidden: true})
+  /**
+   * 修改input值，可控
+   * @param  {[String]} name [中文名还是英文名]
+   * @param  {[type]}   i    [改变的值在列表里的下标]
+   * @param  {[Stirng]} v    [改变后的值]
+   * @return {[Object]}      [返回列表对象]
+   */
+  changeList(name, i, v) {
+    this.setState((prevState, props) => {
+      return prevState.ul[i][name] = v;
+    });
   }
 
-  addNewItem(e) {
-    console.log(this.add.delete)
-    if(this.add.delete !== 'undefined') {
-      this.setState({
-        no: this.state.no + 1
-      }, function() {
-        ul.push(li);
-        this.setState({
-          ul
-        });
-      })
-    } else {
-      console.log('xx')
-    }
+  /**
+   * 删除某一项
+   * @param  {[Array]} list [子组件传过来的列表]
+   * @return {[type]}      [description]
+   */
+  deleteItem(list) {
+    this.setState((prevState) => ({
+      ul: list
+    }));
   }
+
+  addNewItem() {
+    // this.setState({
+    //   no: this.state.no + 1 
+    // })
+
+    // 为了return整个对象，所以对象外面包含小括号
+    // ul里增加元素可以用push，但元素是对象需要用concat
+    this.setState((prevState, props) => ({
+      ul: prevState.ul.concat([{no: prevState.ul[prevState.ul.length - 1].no + 1, cnValue: '', enValue: ''}])
+    }));
+    console.log(this.state.ul)
+  }
+
 
   render() {
-    li = <li key={this.state.no}>
-          <dl className='item-row'>
-            <dd>{this.state.no}</dd>
-            <dd>
-              {/* <InputItem
-                {...getFieldProps('inputclear')}
-                onClick={() => this.checkValue()}
-                onBlur={() => this.deleteLine()}
-              ></InputItem> */ }
-              <input type="text"
-                onChange={(e) => this.checkValue(e)}
-                ref={input => this.cnref = input} />
-            </dd>
-            <dd>
-              {/* <InputItem
-                {...getFieldProps('inputclear')}
-                onClick={() => this.checkValue()}
-                onBlur={() => this.deleteLine()}
-              ></InputItem> */}
-              <input type="text"
-                onChange={(e) => this.checkValue(e)}
-                ref={input => this.enref = input} />
-            </dd>
-            <dd className={this.state.plusHidden ? 'hide-plus' : ''} ref={input => this.add = input } onClick={(e) => this.addNewItem(e)}>+</dd>
-          </dl>
-        </li>
-    const { getFieldProps } = this.props.form;
     return (
-      <ul>
-        <li key={1}>
-          <dl className='item-row'>
-            <dd>1</dd>
-            <dd>
-              {/* <InputItem
-                {...getFieldProps('inputclear')}
-                onClick={() => this.checkValue()}
-                onBlur={() => this.deleteLine()}
-              ></InputItem> */ }
-              <input type="text"
-                onChange={(e) => this.checkValue(e)}
-                ref={input => this.cnref = input} />
-            </dd>
-            <dd>
-              {/* <InputItem
-                {...getFieldProps('inputclear')}
-                onClick={() => this.checkValue()}
-                onBlur={() => this.deleteLine()}
-              ></InputItem> */}
-              <input type="text"
-                onChange={(e) => this.checkValue(e)}
-                ref={input => this.enref = input} />
-            </dd>
-            <dd className={this.state.plusHidden ? 'hide-plus' : ''} ref={input => this.add = input } onClick={() => this.addNewItem()}>+</dd>
-          </dl>
-        </li>
-        {this.state.ul}
-      </ul>
+      <div className='add-item-area'>
+        <ul className='items'>
+          <CheckInItem ul={this.state.ul}
+            changeList={(name, i, v) => { this.changeList(name, i, v); }}
+            deleteItem={this.deleteItem} />
+        </ul>
+        <div className="plus-btn" onClick={this.addNewItem}>+</div>
+        <div className="btn green narrow fixed">添加</div>
+      </div>
     )
   }
 }
 
-const AddCheckInTable = createForm()(AddCheckInTableWrap);
 export default AddCheckInTable;
