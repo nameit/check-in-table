@@ -135,3 +135,29 @@ header {
     border-radius: 10px;
   }
 }
+
+.btn {
+  margin: 30px auto;
+  background: $theme-color;
+  line-height: 44px;
+  font-size: 15px;
+  height: 44px;
+  text-align: center;
+  color: #fff;
+  width: 70%;
+  border-radius: 20px;
+  &.green {
+    background: $check-in-color;
+  }
+  &.fixed {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    margin-left: -35%;
+    margin-bottom: 0;
+  }
+  &.narrow {
+    height: 34px;
+    line-height: 34px;
+  }
+}

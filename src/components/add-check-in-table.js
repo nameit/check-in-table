@@ -4,6 +4,7 @@ import ReactDom from 'react-dom';
 import { createForm } from 'rc-form';
 
 import Utils from '../utils';
+import CheckInItem from '../components/check-in-item';
 
 let ul = [],li;
 
@@ -52,83 +53,42 @@ class AddCheckInTableWrap extends React.Component {
 
   checkValue(e) {
     e.target.className = e.target.value ? 'no-border' : ''
-    this.cnref.value && this.enref.value ? this.setState({plusHidden: false}) : this.setState({plusHidden: true})
   }
 
-  addNewItem(e) {
-    console.log(this.add.delete)
-    if(this.add.delete !== 'undefined') {
-      this.setState({
-        no: this.state.no + 1
-      }, function() {
-        ul.push(li);
-        this.setState({
-          ul
-        });
-      })
-    } else {
-      console.log('xx')
-    }
+  addNewItem() {
+    this.setState({
+      no: this.state.no + 1 
+    })
   }
+
 
   render() {
-    li = <li key={this.state.no}>
-          <dl className='item-row'>
-            <dd>{this.state.no}</dd>
-            <dd>
-              {/* <InputItem
-                {...getFieldProps('inputclear')}
-                onClick={() => this.checkValue()}
-                onBlur={() => this.deleteLine()}
-              ></InputItem> */ }
-              <input type="text"
-                onChange={(e) => this.checkValue(e)}
-                ref={input => this.cnref = input} />
-            </dd>
-            <dd>
-              {/* <InputItem
-                {...getFieldProps('inputclear')}
-                onClick={() => this.checkValue()}
-                onBlur={() => this.deleteLine()}
-              ></InputItem> */}
-              <input type="text"
-                onChange={(e) => this.checkValue(e)}
-                ref={input => this.enref = input} />
-            </dd>
-            <dd className={this.state.plusHidden ? 'hide-plus' : ''} ref={input => this.add = input } onClick={(e) => this.addNewItem(e)}>+</dd>
-          </dl>
-        </li>
     const { getFieldProps } = this.props.form;
     return (
-      <ul>
-        <li key={1}>
-          <dl className='item-row'>
-            <dd>1</dd>
-            <dd>
-              {/* <InputItem
-                {...getFieldProps('inputclear')}
-                onClick={() => this.checkValue()}
-                onBlur={() => this.deleteLine()}
-              ></InputItem> */ }
-              <input type="text"
-                onChange={(e) => this.checkValue(e)}
-                ref={input => this.cnref = input} />
-            </dd>
-            <dd>
-              {/* <InputItem
-                {...getFieldProps('inputclear')}
-                onClick={() => this.checkValue()}
-                onBlur={() => this.deleteLine()}
-              ></InputItem> */}
-              <input type="text"
-                onChange={(e) => this.checkValue(e)}
-                ref={input => this.enref = input} />
-            </dd>
-            <dd className={this.state.plusHidden ? 'hide-plus' : ''} ref={input => this.add = input } onClick={() => this.addNewItem()}>+</dd>
-          </dl>
-        </li>
-        {this.state.ul}
-      </ul>
+      <div className='add-item-area'>
+        <ul className='items'>
+          <CheckInItem no={this.state.no} >
+            <dl className='item-row'>
+              <dd>{this.state.no}</dd>
+              <dd>
+                <input type="text"
+                  onChange={(e) => this.checkValue(e)}
+                  ref={input => this.cnref = input} />
+              </dd>
+              <dd>
+                <input type="text"
+                  onChange={(e) => this.checkValue(e)}
+                  ref={input => this.enref = input} />
+              </dd>
+              <dd>
+                <span className='delete-btn'>+</span>
+              </dd>
+            </dl>
+          </CheckInItem>
+        </ul>
+        <div className="plus-btn" onClick={this.addNewItem.bind(this)}>+</div>
+        <div className="btn green narrow fixed">添加</div>
+      </div>
     )
   }
 }

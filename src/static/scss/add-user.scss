@@ -19,7 +19,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     .add-name {
       display: flex;
       flex-direction: column;
@@ -56,22 +56,23 @@
       color: #fff;
       margin-bottom: 20px;
       align-items: center;
+      justify-content: space-around;
       dd {
         text-align: center;
         &:nth-of-type(4n+1) {
           width: 10%;
-          text-align: right;
+          text-align: center;
           color: #fff;
         }
         &:nth-of-type(4n+2) {
-          width: 40%;
+          width: 45%;
         }
         color: #fff;
         &:nth-of-type(4n+3) {
-          width: 40%;
+          width: 35%;
         }
-        &.hide-plus {
-          display: none;
+        &:nth-of-type(4n+4) {
+          width: 10%;
         }
       }
     }
@@ -81,15 +82,40 @@
         border-bottom: 1px solid  #fff;
       }
     }
-    .item-row input {
-      background-color: transparent;
-      border: 0 none;
-      border-bottom: 1px solid  #fff;
-      color: #fff;
-      text-align: center;
-      &.no-border {
-        border-bottom: 0 none;
+    .item-row {
+      input {
+        background-color: transparent;
+        border: 0 none;
+        border-bottom: 1px solid  #fff;
+        color: #fff;
+        text-align: center;
+        width: 98%;
+        &.no-border {
+          border-bottom: 0 none;
+        }
+      }
+      .delete-btn {
+        display: inline-block;
+        transform: rotate(45deg);
+        font-size: 20px;
       }
     }
   }
+}
+
+.add-item-area {
+  height: 200px;
+  overflow: auto;
+}
+
+.plus-btn {
+  margin: 0 auto;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  border-radius: 40px;
+  background: #fff;
+  font-size: 30px;
+  color: $theme-color;
+  line-height: 35px;
 }
